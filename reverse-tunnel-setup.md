@@ -7,7 +7,7 @@ You may want your SERVER to connect your Link Up Server with SSH, create a rever
 
 Create a key for Dropbear SSH client (`dbclient`) so that it can make ssh to the Link Up Server: 
 
-```
+```bash
 mkdir -p /etc/initramfs-tools/root/key
 dropbearkey -f /etc/initramfs-tools/root/key/id_rsa -t rsa -s 2048
 ```
@@ -62,7 +62,7 @@ chmod +x /etc/initramfs-tools/hooks/ssh-client.sh
 ### 3. Create the reverse tunnel client script
 
 Create a script in `/etc/initramfs-tools/scripts/init-premount/link-with-server.sh` 
-```
+```bash
 #!/bin/sh
 
 PREREQ="dropbear"
