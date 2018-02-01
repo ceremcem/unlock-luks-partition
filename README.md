@@ -1,7 +1,9 @@
 
 
 
-# Boot your SERVER by connecting and unlocking the encrypted partition via your CLIENT
+# Unlock LUKS Partition with SSH
+
+Below instructions are for booting your SERVER by connecting and unlocking the encrypted partition via your CLIENT over SSH:
 
 **WARNING**: Typing your crypto key over network might be secure (due to the secure nature of the SSH connection) **as long as** you are completely certain that the initramfs has not been subjugated so that there is no MITM attack taking place while you are typing your disk passphrase.
 
