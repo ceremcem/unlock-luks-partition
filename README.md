@@ -26,7 +26,7 @@ Just copy and paste your public key(s) into `/etc/dropbear-initramfs/authorized_
 
 ### 3. Create the unlock script 
 
-Create following script in `/etc/initramfs-tools/hooks/crypt_unlock.sh`
+Create following script as `/etc/initramfs-tools/hooks/crypt_unlock.sh`
 
 ```bash
 #!/bin/sh
@@ -53,7 +53,6 @@ cat > "${DESTDIR}/bin/unlock" << EOF
 if PATH=/lib/unlock:/bin:/sbin /scripts/local-top/cryptroot; then
 kill \`ps | grep cryptroot | grep -v "grep" | awk '{print \$1}'\`
 # following lines will be executed after the passphrase has been correctly entered
-killall dropbear
 # kill the remote shell
 kill -9 \`ps | grep "\-sh" | grep -v "grep" | awk '{print \$1}'\`
 exit 0
@@ -79,8 +78,23 @@ fi
 
 Make it executable: 
 
-```
+```bash
 chmod +x /etc/initramfs-tools/hooks/crypt_unlock.sh
+```
+
+Create the cleanup script as `/etc/initramfs-tools/scripts/init-bottom/cleanup.sh`:
+
+```bash
+#!/bin/sh
+echo "Killing dropbear"
+killall dropbear
+exit 0
+```
+
+...and make it executable:
+
+```bash
+chmod +x /etc/initramfs-tools/scripts/init-bottom/cleanup.sh
 ```
 
 ### 4. Create a static IP (or skip this step to use DHCP)
