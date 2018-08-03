@@ -52,8 +52,9 @@ cat > "${DESTDIR}/bin/unlock" << EOF
 #!/bin/sh
 if PATH=/lib/unlock:/bin:/sbin /scripts/local-top/cryptroot; then
 kill \`ps | grep cryptroot | grep -v "grep" | awk '{print \$1}'\`
-# following line kill the remote shell right after the passphrase has
-# been entered.
+# following lines will be executed after the passphrase has been correctly entered
+killall dropbear
+# kill the remote shell
 kill -9 \`ps | grep "\-sh" | grep -v "grep" | awk '{print \$1}'\`
 exit 0
 fi
