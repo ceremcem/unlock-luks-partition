@@ -13,9 +13,9 @@ Below instructions are for booting your SERVER by connecting and unlocking the e
 apt-get install dropbear initramfs-tools busybox
 ```
 
-Disable the dropbear service on boot so openssh is used after partition is decrypted
+Check that Dropbear has disabled itself in `/etc/default/dropbear`
 ```
-sudo update-rc.d dropbear disable
+NO_START=1
 ```
 
 
