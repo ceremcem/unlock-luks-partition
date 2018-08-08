@@ -8,11 +8,17 @@ You may want your SERVER to connect your Link Up Server with SSH, create a rever
 Create a key for Dropbear SSH client (`dbclient`) so that it can make ssh to the Link Up Server: 
 
 ```bash
-mkdir -p /etc/initramfs-tools/root/key
-dropbearkey -f /etc/initramfs-tools/root/key/id_rsa -t rsa -s 2048
+# mkdir -p /etc/initramfs-tools/root/key
+# dropbearkey -f /etc/initramfs-tools/root/key/id_rsa -t rsa -s 2048
+Public key portion is: 
+...
 ```
 
-Note: You must register this public key to your Link Up Server's SSH account's `authorized_keys` file. 
+Note: You must register this public key to your Link Up Server's SSH account's `authorized_keys` file. You can obtain the public key anytime with: 
+
+```bash
+# dropbearkey -y -f /etc/initramfs-tools/root/key/id_rsa
+```
 
 ### 2. Add an ssh client to the initramfs
 
