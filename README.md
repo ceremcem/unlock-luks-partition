@@ -105,13 +105,17 @@ Edit `/etc/initramfs-tools/initramfs.conf` to add (or change) the line:
 IP=192.168.1.254::192.168.1.1:255.255.255.0::eth0:off
 ```
 
-    format [host ip]::[gateway ip]:[netmask]:[hostname]:[device]:[autoconf]
+    format: 
+    
+        IP=$ip::$gateway_ip:$netmask:[$hostname]:$eth_device:$autoconf
 
     ([hostname] can be omitted)
    
-> In newer kernels `eth0` is renamed to `enp0s3` (or something like that). Check that out with `ifconfig` (or `ip a` if `ifconfig` is not available anymore, or `ls /sys/class/net`)
+> In newer kernels `eth0` is renamed to `enp0s3` (or something like that). Check that out with `ls /sys/class/net`
 
-### 5. Update initialramfs 
+### 5. Update initramfs 
+
+**WARNING**: Be careful if you **directly** edited `/boot/grub/grub.cfg`, this file will be updated. You may end up with broken boot sequence. See [the important note](https://github.com/ceremcem/smith-sync/blob/master/doc/create-bootable-backup.md#important)
 
 ```
 update-initramfs -u
