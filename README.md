@@ -128,8 +128,20 @@ update-initramfs -u
 2. Connect to your server via `ssh root@192.168.1.254 [-i ~/.ssh/id_rsa]`
 
 
-# Advanced configuration: Create a Reverse Tunnel
+# Advanced configuration
+
+### Create a Reverse Tunnel
 
 You may want your SERVER to connect your Link Up Server with SSH, create a reverse tunnel to its SSH Server, so you can connect your SERVER over your Link Up Server, which eliminates the need for firewall forwarding for above process.
 
 (see [reverse-tunnel-setup.md](./reverse-tunnel-setup.md))
+
+### Run Dropbear on additional ports 
+
+(based on https://askubuntu.com/a/840067/371730)
+
+Add extra ports to the `exec /sbin/dropbear ...` line in `/usr/share/initramfs-tools/scripts/init-premount/dropbear`: 
+
+```bash
+exec /sbin/dropbear $DROPBEAR_OPTIONS -Fs -p 22 -p 2222
+```
