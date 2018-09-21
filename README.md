@@ -107,7 +107,7 @@ IP=192.168.1.254::192.168.1.1:255.255.255.0::eth0:off
 
     format: 
     
-        IP=$ip::$gateway_ip:$netmask:[$hostname]:$eth_device:$autoconf
+        IP=${ip}::${gateway_ip}:${netmask}:[${hostname}]:${eth_device}:${autoconf}
 
     ([hostname] can be omitted)
    
@@ -115,7 +115,7 @@ IP=192.168.1.254::192.168.1.1:255.255.255.0::eth0:off
 
 ### 5. Update initramfs 
 
-**WARNING**: Be careful if you **directly** edited `/boot/grub/grub.cfg`, this file will be updated. You may end up with broken boot sequence. See [the important note](https://github.com/ceremcem/smith-sync/blob/master/doc/create-bootable-backup.md#important)
+**WARNING**: Be careful if you **directly** edited `/boot/grub/grub.cfg`, since it will be **overwritten** by below command. You may end up with broken boot sequence. See [the important note](https://github.com/ceremcem/smith-sync/blob/master/doc/create-bootable-backup.md#important)
 
 ```
 update-initramfs -u
