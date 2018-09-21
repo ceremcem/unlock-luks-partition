@@ -140,8 +140,14 @@ You may want your SERVER to connect your Link Up Server with SSH, create a rever
 
 (based on https://askubuntu.com/a/840067/371730)
 
-Add extra ports to the `exec /sbin/dropbear ...` line in `/usr/share/initramfs-tools/scripts/init-premount/dropbear`: 
+1. Add extra ports to the `exec /sbin/dropbear ...` line in `/usr/share/initramfs-tools/scripts/init-premount/dropbear`: 
 
-```bash
-exec /sbin/dropbear $DROPBEAR_OPTIONS -Fs -p 22 -p 2222
-```
+    ```bash
+    exec /sbin/dropbear $DROPBEAR_OPTIONS -Fs -p 22 -p 2222
+    ```
+
+2. Update initramfs: 
+
+    ```console 
+    update-initramfs -u
+    ```
