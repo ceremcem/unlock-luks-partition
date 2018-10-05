@@ -26,7 +26,7 @@ Just copy and paste your public key(s) into `/etc/dropbear-initramfs/authorized_
 
 ### 3. Create the unlock script 
 
-Create following script as `/etc/initramfs-tools/hooks/crypt_unlock.sh`
+Create the following script as `/etc/initramfs-tools/hooks/crypt_unlock.sh`
 
 ```bash
 #!/bin/sh
