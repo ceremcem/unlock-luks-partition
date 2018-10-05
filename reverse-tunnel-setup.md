@@ -14,7 +14,7 @@ Public key portion is:
 ...
 ```
 
-Note: You must register this public key to your Link Up Server's SSH account's `authorized_keys` file. You can obtain the public key anytime with: 
+Note: You must register this *Public key portion* to your Link Up Server's SSH account's `authorized_keys` file. You can obtain the public key at anytime with: 
 
 ```console
 # dropbearkey -y -f /etc/initramfs-tools/root/key/id_rsa
@@ -22,7 +22,7 @@ Note: You must register this public key to your Link Up Server's SSH account's `
 
 ### 2. Add an ssh client to the initramfs
 
-To copy an ssh client, the key file and some other mandatory files upon `update-initramfs -u`, create the following script at `/etc/initramfs-tools/hooks/ssh-client.sh`: 
+To copy an ssh client, the key file and some other mandatory files upon initramfs update, create the following script at `/etc/initramfs-tools/hooks/ssh-client.sh`: 
 
 ```bash
 #!/bin/sh
@@ -67,7 +67,7 @@ chmod +x /etc/initramfs-tools/hooks/ssh-client.sh
 
 ### 3. Create the reverse tunnel client script
 
-Create a script in `/etc/initramfs-tools/scripts/init-premount/link-with-server.sh` 
+Create the following script in `/etc/initramfs-tools/scripts/init-premount/link-with-server.sh` 
 ```bash
 #!/bin/sh
 
@@ -89,8 +89,9 @@ esac
 
 LINK_UP_PORT=1234
 LINK_UP_SERVER="example.com"
-LINK_UP_USER="myuser"
 LINK_UP_SERVER_PORT=22
+LINK_UP_USER="myuser"
+LOCAL_SSHD_PORT=22  # see README.md#run-dropbear-on-additional-ports
 
 check_internet(){
 	if ping -c 1 ${LINK_UP_SERVER} > /dev/null 2>&1; then
@@ -110,7 +111,7 @@ create_link(){
 	done
 	echo "Creating link with server..."
 	/sbin/ifconfig lo up
-	dbclient -R ${LINK_UP_PORT}:127.0.0.1:22 ${LINK_UP_USER}@${LINK_UP_SERVER} -p ${LINK_UP_SERVER_PORT} -i /root/.ssh/id_rsa -N -f -y -y
+	dbclient -R ${LINK_UP_PORT}:127.0.0.1:${LOCAL_SSHD_PORT} ${LINK_UP_USER}@${LINK_UP_SERVER} -p ${LINK_UP_SERVER_PORT} -i /root/.ssh/id_rsa -N -f -y -y
 }
 
 watchdog(){
