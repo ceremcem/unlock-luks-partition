@@ -94,7 +94,7 @@ LINK_UP_USER="myuser"
 LOCAL_SSHD_PORT=22  # see README.md#run-dropbear-on-additional-ports
 
 check_internet(){
-	if ping -c 1 ${LINK_UP_SERVER} > /dev/null 2>&1; then
+	if ping -c 1 example.com > /dev/null 2>&1; then
 	    echo "online"
 	else
 	    echo "offline"
