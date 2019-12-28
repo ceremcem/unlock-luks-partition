@@ -68,6 +68,9 @@ chmod +x /etc/initramfs-tools/hooks/ssh-client.sh
 ### 3. Create the reverse tunnel client script
 
 Create the following script in `/etc/initramfs-tools/scripts/init-premount/link-with-server.sh` 
+
+> DO NOT FORGET TO CHANGE THE SETTINGS IN BELOW SCRIPT. 
+
 ```bash
 #!/bin/sh
 
