@@ -110,7 +110,7 @@ create_link(){
 		if [[ `check_internet` == "online" ]]; then 
 			break
 		fi
-		sleep 2
+		sleep 2 || exit
 	done
 	echo "Creating link with server..."
 	/sbin/ifconfig lo up
@@ -129,7 +129,7 @@ watchdog(){
 		echo "No internet connection, rebooting..."
 		sleep 3
 	fi
-	/bin/reboot
+	/bin/reboot || exit
 }
 
 
