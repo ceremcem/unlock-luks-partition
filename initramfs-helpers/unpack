@@ -23,7 +23,8 @@ cd $unpack_folder
 file_type=`file $initrd_file | grep "ASCII cpio archive"`
 if [[ -z "$file_type" ]]; then 
     gunzip < $initrd_file | cpio -i --make-directories
-else 
+else
+    # taken from https://unix.stackexchange.com/a/329937/65781
     (cpio -id; zcat | cpio -id) < "$initrd_file"
 fi
 cd $_sdir
