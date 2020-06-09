@@ -1,6 +1,6 @@
 # Reverse Tunnel Setup
 
-You may want your SERVER to connect your Link Up Server with SSH, create a reverse tunnel to its SSH Server, so you can connect your SERVER over your Link Up Server, which eliminates the need for firewall forwarding for above process.
+You may want your SERVER to connect your Link Up Server with SSH, create a reverse tunnel to its SSH Server, so you can connect your SERVER over your Link Up Server, which eliminates the need for firewall port forwarding in the router.
 
 
 ### 1. Create public/private key pair 
