@@ -1,0 +1,31 @@
+#!/bin/bash
+set -eu -o pipefail
+safe_source () { [[ ! -z ${1:-} ]] && source $1; _dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"; _sdir=$(dirname "$(readlink -f "$0")"); }; safe_source
+# end of bash boilerplate
+
+safe_source $_sdir/lib.sh
+
+[[ -f ${1:-} ]] || die "First argument should be initrd file"
+initrd_file=$(readlink -f ${1:-})
+
+[[ $(whoami) = "root" ]] || { sudo $0 "$@"; exit 0; }
+
+unpack_folder=$_sdir/initrd.d
+initrd_name=$_sdir/initrd.name
+
+if [[ -d $unpack_folder ]] && prompt_yes_no "delete contents of $unpack_folder ?"; then
+    rm -rf $unpack_folder
+fi 
+
+mkdir -p $unpack_folder
+
+cd $unpack_folder
+file_type=`file $initrd_file | grep "ASCII cpio archive"`
+if [[ -z "$file_type" ]]; then 
+    gunzip < $initrd_file | cpio -i --make-directories
+else 
+    (cpio -id; zcat | cpio -id) < "$initrd_file"
+fi
+cd $_sdir
+echo "$(basename $initrd_file)" > $initrd_name
+

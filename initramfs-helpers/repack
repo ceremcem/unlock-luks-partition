@@ -1,0 +1,19 @@
+#!/bin/bash
+set -eu -o pipefail
+safe_source () { [[ ! -z ${1:-} ]] && source $1; _dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"; _sdir=$(dirname "$(readlink -f "$0")"); }; safe_source
+# end of bash boilerplate
+
+safe_source $_sdir/lib.sh
+
+[[ $(whoami) = "root" ]] || { sudo $0 "$@"; exit 0; }
+
+unpack_folder=$_sdir/initrd.d
+initrd_name=$_sdir/initrd.name
+
+new_initrd="$_sdir/$(cat $initrd_name).new"
+
+echo "Packing $unpack_folder as $new_initrd"
+cd $unpack_folder
+find . 2>/dev/null | cpio --quiet --dereference -o -H newc | gzip -9 > "$new_initrd"
+
+cd $_sdir
