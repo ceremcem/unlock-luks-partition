@@ -114,7 +114,7 @@ create_link(){
 	done
 	echo "Creating link with server..."
 	/sbin/ifconfig lo up
-	dbclient -R ${LINK_UP_PORT}:127.0.0.1:${LOCAL_SSHD_PORT} ${LINK_UP_USER}@${LINK_UP_SERVER} -p ${LINK_UP_SERVER_PORT} -i /root/.ssh/id_rsa -N -f -y -y
+	dbclient -R ${LINK_UP_PORT}:127.0.0.1:${LOCAL_SSHD_PORT} ${LINK_UP_USER}@${LINK_UP_SERVER} -p ${LINK_UP_SERVER_PORT} -i /root/.ssh/id_rsa -N -f -y
 }
 
 watchdog(){
